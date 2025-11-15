@@ -40,8 +40,30 @@ class Gameboard {
 		];
 		this.ships = [];
 	}
+	placeShip(ship, x, y, isHorizontal) {
+		for (let i = 0; i < ship.length; i++) {
+			if (isHorizontal) {
+				this.grid[y][x + i] = ship;
+			} else {
+				this.grid[y + i][x] = ship;
+			}
+		}
+	}
+	receiveAttack(x, y) {
+		if (this.grid[y][x] === 0) {
+			console.log("untouched");
+			this.grid[y][x] = "miss";
+		} else if (this.grid[y][x] === "miss") {
+			console.log("Already tried!");
+		} else if (this.grid[y][x] === "hit") {
+			console.log("Already tried!");
+		} else {
+			this.grid[y][x].hit();
+			this.grid[y][x] = "hit";
+		}
+	}
 }
 
 let ship = new Ship(5, 3, false);
 
-module.exports = { Ship };
+module.exports = { Ship, Gameboard };
