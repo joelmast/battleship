@@ -38,8 +38,8 @@ describe("Gameboard", () => {
 	let testShip2;
 	beforeEach(() => {
 		gameboard = new Gameboard();
-		testShip = { length: 3, hit: () => {}, isSunked: () => false }; // Simple object for length
-		testShip2 = { length: 4, hit: () => {}, isSunked: () => false };
+		testShip = new Ship(3, 0, false);
+		testShip2 = new Ship(4, 0, false);
 	});
 
 	test("gameboard placeShip horizontal test", () => {
@@ -54,5 +54,26 @@ describe("Gameboard", () => {
 		expect(gameboard.grid[5][4]).toEqual(testShip2);
 		expect(gameboard.grid[6][4]).toEqual(testShip2);
 		expect(gameboard.grid[7][4]).toEqual(testShip2);
+	});
+	test("receiveAttack function test", () => {
+		gameboard.receiveAttack(0, 0);
+		expect(gameboard.grid[0][0]).toEqual("miss");
+		gameboard.placeShip(testShip, 1, 1, true);
+		gameboard.receiveAttack(1, 1);
+		expect(testShip.hits).toEqual(1);
+	});
+	test("allShipsSunk function test", () => {
+		gameboard.placeShip(testShip, 1, 1, true);
+		gameboard.placeShip(testShip2, 4, 4, false);
+		expect(gameboard.grid[1][1]).toEqual(testShip);
+		expect(gameboard.grid[4][4]).toEqual(testShip2);
+		expect(gameboard.allShipsSunk()).toEqual(false);
+		for (let i = 0; i < testShip.length; i++) {
+			testShip.hit();
+		}
+		for (let i = 0; i < testShip2.length; i++) {
+			testShip2.hit();
+		}
+		expect(gameboard.allShipsSunk()).toEqual(true);
 	});
 });

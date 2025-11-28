@@ -48,6 +48,7 @@ class Gameboard {
 				this.grid[y + i][x] = ship;
 			}
 		}
+		this.ships.push(ship);
 	}
 	receiveAttack(x, y) {
 		if (this.grid[y][x] === 0) {
@@ -61,6 +62,34 @@ class Gameboard {
 			this.grid[y][x].hit();
 			this.grid[y][x] = "hit";
 		}
+	}
+	allShipsSunk() {
+		return this.ships.every((ship) => ship.isSunked());
+	}
+}
+
+class Player {
+	constructor(playerType) {
+		this.gameboard = new Gameboard();
+		this.type = playerType;
+	}
+	attack(enemyGameboard) {
+		let x;
+		let y;
+		let isIllegalMove = true; // Flag to control the loop
+
+		while (isIllegalMove) {
+			x = Math.floor(Math.random() * 10);
+			y = Math.floor(Math.random() * 10);
+
+			const spot = enemyGameboard.grid[y][x];
+
+			if (spot !== "miss" && spot !== "hit") {
+				isIllegalMove = false; // Found a legal move, exit loop
+			}
+		}
+
+		enemyGameboard.receiveAttack(x, y);
 	}
 }
 
