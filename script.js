@@ -95,4 +95,4 @@ class Player {
 
 let ship = new Ship(5, 3, false);
 
-module.exports = { Ship, Gameboard };
+module.exports = { Ship, Gameboard, Player };
