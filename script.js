@@ -73,22 +73,21 @@ class Player {
 		this.gameboard = new Gameboard();
 		this.type = playerType;
 	}
-	attack(enemyGameboard) {
-		let x;
-		let y;
-		let isIllegalMove = true; // Flag to control the loop
+	attack(enemyGameboard, x, y) {
+		if (this.type === "computer") {
+			let isIllegalMove = true; // Flag to control the loop
 
-		while (isIllegalMove) {
-			x = Math.floor(Math.random() * 10);
-			y = Math.floor(Math.random() * 10);
+			while (isIllegalMove) {
+				x = Math.floor(Math.random() * 10);
+				y = Math.floor(Math.random() * 10);
 
-			const spot = enemyGameboard.grid[y][x];
+				const spot = enemyGameboard.grid[y][x];
 
-			if (spot !== "miss" && spot !== "hit") {
-				isIllegalMove = false; // Found a legal move, exit loop
+				if (spot !== "miss" && spot !== "hit") {
+					isIllegalMove = false; // Found a legal move, exit loop
+				}
 			}
 		}
-
 		enemyGameboard.receiveAttack(x, y);
 	}
 }
