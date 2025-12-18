@@ -1,26 +1,29 @@
-function renderBoard(gameboard, isPlayerBoard) {
-	let boardContainer = document.getElementById("board-container");
+function renderBoard(gameboard, isPlayerBoard, containerID, attackHandler) {
+	let boardContainer = document.getElementById(containerID);
+	boardContainer.innerHTML = "";
 
 	for (let i = 0; i < gameboard.grid.length; i++) {
 		for (let j = 0; j < gameboard.grid[i].length; j++) {
 			let cell = document.createElement("div");
-			if (isPlayerBoard === false) {
-				cell.addEventListener("click", () => {
-					let dataX = cell.getAttribute("data-x");
-					let dataY = cell.getAttribute("data-y");
-
-					// Pass coordinates to Human Player attack
-
-					// Computer player make counterattack
-
-					// Check for win
-
-					// Re-render boards
-				});
-			}
+			// Add cell class
+			cell.classList.add("cell");
+			// Set data coordinates
 			cell.setAttribute("data-x", j);
 			cell.setAttribute("data-y", i);
-			cell.classList.add("cell");
+			// Add event listener for the computers board
+			if (isPlayerBoard === false) {
+				if (
+					gameboard.grid[i][j] !== "hit" &&
+					gameboard.grid[i][j] !== "miss"
+				) {
+					cell.addEventListener("click", () => {
+						attackHandler(j, i);
+					});
+				} else {
+					// Change to DOM later
+					alert("already attacked!");
+				}
+			}
 			if (gameboard.grid[i][j] === "miss") {
 				cell.classList.add("miss");
 			} else if (gameboard.grid[i][j] === "hit") {

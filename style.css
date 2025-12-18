@@ -1,0 +1,28 @@
+.main-game-container {
+	display: flex;
+	justify-content: space-around;
+}
+
+.board-wrapper {
+	display: flex;
+}
+
+.board {
+	display: grid;
+	height: 80vh;
+	width: 50vw;
+	grid-template-columns: repeat(10, 1fr);
+	grid-template-rows: repeat(10, 1fr);
+}
+
+.cell {
+	border-style: solid;
+}
+
+.hit {
+	background-color: red;
+}
+
+.miss {
+	background-color: gray;
+}

@@ -2,6 +2,7 @@ const { Ship, Gameboard, Player } = require("./script.js");
 const { renderBoard } = require("./displayController.js");
 let human;
 let computer;
+let boardContainer = document.getElementById("board-container");
 
 function setupGame() {
 	human = new Player("real");
@@ -31,8 +32,11 @@ function handleAttack(x, y) {
 	renderAllBoards();
 }
 
-function renderAllBoards() [
-    
-]
+function renderAllBoards() {
+	// render human
+	renderBoard(human.gameboard, true, "human-board");
+	// render computer
+	renderBoard(computer.gameboard, false, "computer-board", handleAttack);
+}
 
 module.exports = { setupGame, handleAttack };
