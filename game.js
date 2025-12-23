@@ -16,6 +16,82 @@ function setupGame() {
 	return { human, computer };
 }
 
+function isNotValidInput(input) {
+	// 1. Basic check for null, undefined, or empty
+	if (!input || typeof input !== "string") {
+		return true;
+	}
+
+	// 2. Split by comma and check if we have exactly 3 parts
+	const parts = input.split(",");
+	if (parts.length !== 3) {
+		return true;
+	}
+
+	// 3. Clean up whitespace from all parts
+	const xStr = parts[0].trim();
+	const yStr = parts[1].trim();
+	const dirStr = parts[2].trim().toLowerCase();
+
+	// 4. Validate X and Y are non-empty and are actual numbers
+	// Check for empty string because Number(" ") is 0
+	if (xStr === "" || yStr === "") {
+		return true;
+	}
+
+	const x = Number(xStr);
+	const y = Number(yStr);
+
+	// Use Number.isInteger to ensure no decimals or NaN
+	if (!Number.isInteger(x) || !Number.isInteger(y)) {
+		return true;
+	}
+
+	// Ensure they aren't negative
+	if (x < 0 || y < 0) {
+		return true;
+	}
+
+	// 5. Validate direction (must be exactly 'h' or 'v')
+	if (dirStr !== "h" && dirStr !== "v") {
+		return true;
+	}
+
+	// If it passed every check above, it is valid (return false for isNotValid)
+	return false;
+}
+
+function shipPlacement() {
+	let shipInfo = [
+		["the Soloist which has a length of 1", 1],
+		["the Binary Blade which has a length of 2", 2],
+		["the Trident's tip, which has a length of 3", 3],
+		["the Quad-core which has a length of 4", 4],
+		["the Penta-Punch which as a length of 5", 5],
+	];
+	for (let i = 0; i < shipInfo.length; i++) {
+		let ship = prompt(
+			`Enter information to place ${shipInfo[i][0]}. Use the following format: x, y, h/v (horizontal or vertical)`,
+			"x, y, h/v"
+		);
+		while (isNotValidInput(ship)) {
+			ship = prompt(
+				`INVALID INPUT!! Enter information to place ${shipInfo[i][0]}. Use the following format: x, y, h/v (horizontal or vertical)`,
+				"x, y, h/v"
+			);
+		}
+		let infoArr = ship.split(",");
+		let x = parseInt(infoArr[0]);
+		let y = parseInt(infoArr[1]);
+		let isVertical;
+		if (infoArr[2].trim() === "h") {
+			isVertical = false;
+		} else if (infoArr[2].trim() === "v") {
+			isVertical = true;
+		}
+	}
+}
+
 function handleAttack(x, y) {
 	human.attack(computer.gameboard, x, y);
 

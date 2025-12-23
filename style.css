@@ -5,6 +5,7 @@
 
 .board-wrapper {
 	display: flex;
+	flex-direction: column;
 }
 
 .board {
@@ -16,7 +17,10 @@
 }
 
 .cell {
-	border-style: solid;
+	border: 1px solid black;
+}
+.cell:not(.hit):not(.miss):hover {
+	background-color: rgba(0, 0, 0, 0.507);
 }
 
 .hit {
@@ -25,4 +29,8 @@
 
 .miss {
 	background-color: gray;
+}
+
+.ship {
+	background-color: green;
 }
