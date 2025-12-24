@@ -74,7 +74,7 @@ function shipPlacement() {
 			`Enter information to place ${shipInfo[i][0]}. Use the following format: x, y, h/v (horizontal or vertical)`,
 			"x, y, h/v"
 		);
-		while (isNotValidInput(ship)) {
+		while (isNotValidInput(ship) && isNotCollision(ship, shipInfo[i][1])) {
 			ship = prompt(
 				`INVALID INPUT!! Enter information to place ${shipInfo[i][0]}. Use the following format: x, y, h/v (horizontal or vertical)`,
 				"x, y, h/v"
@@ -90,6 +90,42 @@ function shipPlacement() {
 			isVertical = true;
 		}
 	}
+}
+
+function isNotCollision(input, length) {
+	if (isNotValidInput(input)) {
+		return false;
+	}
+	let infoArr = input.split(",");
+	let x = parseInt(infoArr[0]);
+	let y = parseInt(infoArr[1]);
+	let isVertical = infoArr[2];
+	if (isVertical === "v") {
+		// test for x coordinate
+		if (x < 0 || x > 9) {
+			return false;
+		} else if (y + length > 9) {
+			return false;
+		}
+		for (let i = 0; i < length; i++) {
+			if (human.gameboard.grid[y + i][x] !== 0) {
+				return false;
+			}
+		}
+	} else {
+		// test for y coordinate
+		if (y < 0 || y > 9) {
+			return false;
+		} else if (y + length > 9) {
+			return false;
+		}
+		for (let i = 0; i < length; i++) {
+			if (human.gameboard.grid[y][x + i] !== 0) {
+				return false;
+			}
+		}
+	}
+	return true;
 }
 
 function handleAttack(x, y) {
