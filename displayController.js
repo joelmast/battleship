@@ -19,9 +19,6 @@ function renderBoard(gameboard, isPlayerBoard, containerID, attackHandler) {
 					cell.addEventListener("click", () => {
 						attackHandler(j, i);
 					});
-				} else {
-					// Change to DOM later
-					alert("already attacked!");
 				}
 			}
 			if (gameboard.grid[i][j] === "miss") {
@@ -38,4 +35,4 @@ function renderBoard(gameboard, isPlayerBoard, containerID, attackHandler) {
 	}
 }
 
-module.exports = { renderBoard };
+export { renderBoard };
